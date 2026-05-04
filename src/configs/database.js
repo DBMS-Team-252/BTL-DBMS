@@ -1,22 +1,23 @@
 const { PrismaClient } = require("@prisma/client");
 const { PrismaMariaDb } = require("@prisma/adapter-mariadb");
-const mariadb = require("mariadb");
-require("dotenv").config();
+require("dotenv").config({ override: true });
 
-const pool = mariadb.createPool({
-    host: process.env.DATABASE_IP,
-    user: "root",
-    password: process.env.DATABASE_PASSWORD,
-    port: process.env.DATABASE_PORT,
-    database: process.env.DATABASE_NAME,
-    connectionLimit: 5,
-});
 
-const adapter = new PrismaMariaDb(pool);
-const prisma = new PrismaClient({ adapter });
+let prisma = null;
 
+/**
+ * Kết nối DB — lazy init để đảm bảo env đã được load trước.
+ * Truyền DATABASE_URL (connection string) trực tiếp vào PrismaMariaDb adapter.
+ */
 const connectDB = async () => {
     try {
+        if (!process.env.DATABASE_URL) {
+            throw new Error("Missing DATABASE_URL in environment variables.");
+        }
+
+        const adapter = new PrismaMariaDb(process.env.DATABASE_URL);
+        prisma = new PrismaClient({ adapter });
+
         await prisma.$connect();
         console.log("✅ Kết nối MySQL qua Prisma thành công!");
     } catch (error) {
@@ -25,4 +26,12 @@ const connectDB = async () => {
     }
 };
 
-module.exports = { prisma, connectDB };
+/**
+ * Lấy prisma instance (đảm bảo đã gọi connectDB trước)
+ */
+const getPrisma = () => {
+    if (!prisma) throw new Error("Database chưa được kết nối. Hãy gọi connectDB() trước.");
+    return prisma;
+};
+
+module.exports = { getPrisma, connectDB };
