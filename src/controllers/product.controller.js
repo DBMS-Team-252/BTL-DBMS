@@ -28,7 +28,7 @@ const getProductDetail = async (req, res) => {// Lấy thông tin chi tiết c�
     const { id } = req.params;
 
     const product = await productService.getProductDetail(id);
-
+    
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -36,10 +36,25 @@ const getProductDetail = async (req, res) => {// Lấy thông tin chi tiết c�
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
-  }
+}
 };
 
-module.exports = {
-    getProducts,
-    getProductDetail
-};
+const createProduct = catchAsync(async (req, res) => {
+    const adminId = req.user.id;
+    const data = await productService.createProduct(req.body, adminId);
+    return success(res, data, "Tạo sản phẩm thành công", 201);
+});
+
+const updateProduct = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const data = await productService.updateProduct(id, req.body);
+    return success(res, data, "Cập nhật sản phẩm thành công");
+});
+
+const deleteProduct = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await productService.deleteProduct(id);
+    return success(res, null, "Xóa sản phẩm thành công");
+});
+
+module.exports = { getProducts, getProductDetail, createProduct, updateProduct, deleteProduct };

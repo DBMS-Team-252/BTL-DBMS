@@ -6,6 +6,10 @@ const morgan = require("morgan");
 const routes = require("./routes");
 const errorMiddleware = require("./middlewares/error.mdw");
 
+BigInt.prototype.toJSON = function () {
+    return this.toString();
+};
+
 const app = express();
 
 // Middlewares
