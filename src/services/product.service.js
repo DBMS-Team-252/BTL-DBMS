@@ -93,6 +93,20 @@ const getProducts = async (query) => {
     return formatPagingData(formattedData, page, limit, totalItems);
 };
 
+const getProductDetail = async (productId) => {// Lấy chi tiết sản phẩm theo ID, bao gồm thông tin danh mục, tồn kho và đánh giá
+    const prisma = getPrisma();
+    return await prisma.products.findUnique({
+    where: { id: BigInt(productId) },
+        include: {
+        categories: true,
+        inventory: true,
+        reviews: true,
+        },
+    });
+};
+
+
 module.exports = {
-    getProducts
+    getProducts,
+    getProductDetail
 };

@@ -23,7 +23,23 @@ const getProducts = catchAsync(async (req, res) => {
     return success(res, result, "Lấy danh sách sản phẩm thành công");
 });
 
+const getProductDetail = async (req, res) => {// Lấy thông tin chi tiết của một sản phẩm
+  try {
+    const { id } = req.params;
+
+    const product = await productService.getProductDetail(id);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 module.exports = {
-    getProducts
+    getProducts,
+    getProductDetail
 };
