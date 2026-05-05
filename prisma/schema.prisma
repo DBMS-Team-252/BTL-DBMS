@@ -98,6 +98,7 @@ model products {
   categories  categories?   @relation(fields: [category_id], references: [id], onUpdate: NoAction, map: "products_ibfk_1")
   users       users?        @relation(fields: [created_by], references: [id], onUpdate: NoAction, map: "products_ibfk_2")
   reviews     reviews[]
+  inventory_transactions inventory_transactions[]
 
   @@index([created_by], map: "created_by")
   @@index([category_id], map: "idx_products_category")
@@ -126,11 +127,41 @@ model users {
   phone      String      @db.VarChar(15)
   password   String      @db.VarChar(255)
   role       users_role? @default(USER)
+  status     user_status @default(ACTICE)
   created_at DateTime?   @default(now()) @db.Timestamp(0)
   carts      carts[]
   orders     orders[]
   products   products[]
   reviews    reviews[]
+  inventory_transactions inventory_transactions[]
+}
+
+model inventory_transactions {
+  id         BigInt   @id @default(autoincrement())
+  product_id BigInt
+  type       transaction_type 
+  quantity   Int      
+  old_stock  Int      
+  new_stock  Int      
+  reason     String?  @db.VarChar(255) 
+  created_by BigInt   
+  created_at DateTime @default(now())
+  
+  products products @relation(fields: [product_id], references: [id])
+  users    users    @relation(fields: [created_by], references: [id])
+}
+
+enum transaction_type {
+  IMPORT   
+  EXPORT   
+  ADJUST   
+  RETURN   
+}
+
+enum user_status {
+  ACTICE
+  DELETED
+  DISABLE
 }
 
 enum orders_status {
