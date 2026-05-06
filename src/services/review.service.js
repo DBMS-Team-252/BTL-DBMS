@@ -144,4 +144,3 @@ const getReviewsByProduct = async (productId) => {
 };
 
 module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct };
-

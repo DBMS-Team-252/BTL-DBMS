@@ -29,4 +29,3 @@ const getReviewsByProduct = catchAsync(async (req, res) => {
 });
 
 module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct };
-
