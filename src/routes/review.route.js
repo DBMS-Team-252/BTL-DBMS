@@ -5,6 +5,10 @@ const roleMiddleware = require("../middlewares/role.mdw");
 
 const router = Router();
 
+// API User: Đánh giá sản phẩm và lấy danh sách đánh giá sản phẩm
+router.post("/", authMiddleware, reviewController.createReview);
+router.get("/product/:productId", reviewController.getReviewsByProduct);
+
 // API Admin: Quản lý và duyệt (xóa) đánh giá
 router.use(authMiddleware, roleMiddleware("ADMIN"));
 

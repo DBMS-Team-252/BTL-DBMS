@@ -41,4 +41,14 @@ const updateOrderStatus = catchAsync(async (req, res) => {
     return success(res, data, "Cập nhật trạng thái đơn hàng thành công");
 });
 
-module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus };
+const getMyOrders = catchAsync(async (req, res) => {
+    const userId = req.user.id;
+    const data = await orderService.getMyOrders(userId);
+    return success(res, data, "Lấy lịch sử đơn hàng thành công");
+});
+
+module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus, getMyOrders };
+
+
+
+

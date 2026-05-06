@@ -7,6 +7,9 @@ const roleMiddleware = require("../middlewares/role.mdw");
 // Checkout (tạo order từ cart)
 router.post('/checkout', orderController.checkout);
 
+// User xem lịch sử đơn hàng của mình
+router.get("/my-orders", authMiddleware, orderController.getMyOrders);
+
 // (Optional) lấy chi tiết order
 router.get('/detail/:id', orderController.getOrderDetail);
 

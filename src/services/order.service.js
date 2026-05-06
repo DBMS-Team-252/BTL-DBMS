@@ -147,4 +147,37 @@ const updateOrderStatus = async (orderId, status, adminId) => {
     });
 };
 
-module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus };
+const getMyOrders = async (userId) => {
+    const prisma = getPrisma();
+
+    const orders = await prisma.orders.findMany({
+        where: { user_id: BigInt(userId) },
+        include: {
+            order_items: {
+                include: {
+                    products: {
+                        select: { id: true, name: true, price: true }
+                    }
+                }
+            },
+            payments: true
+        },
+        orderBy: { created_at: "desc" }
+    });
+
+    return orders.map(order => ({
+        id: order.id.toString(),
+        total: order.total?.toNumber() || 0,
+        status: order.status,
+        created_at: order.created_at,
+        items: order.order_items.map(item => ({
+            product_id: item.product_id.toString(),
+            product_name: item.products?.name,
+            price: item.price?.toNumber(),
+            quantity: item.quantity
+        })),
+        payment: order.payments[0] || null
+    }));
+};
+
+module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus, getMyOrders };
