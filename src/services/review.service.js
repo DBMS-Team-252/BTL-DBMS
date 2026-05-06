@@ -142,5 +142,5 @@ const getReviewsByProduct = async (productId) => {
         created_at: r.created_at
     }));
 };
-
+ 
 module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct };

@@ -12,5 +12,5 @@ const createReviewSchema = Joi.object({
     }),
     comment: Joi.string().allow("").optional()
 });
-
+ 
 module.exports = { createReviewSchema }; 

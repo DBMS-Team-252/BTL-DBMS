@@ -48,4 +48,3 @@ const getMyOrders = catchAsync(async (req, res) => {
 });
 
 module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus, getMyOrders };
-
