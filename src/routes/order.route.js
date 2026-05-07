@@ -16,4 +16,4 @@ router.get('/detail/:id', orderController.getOrderDetail);
 router.get("/admin", authMiddleware, roleMiddleware("ADMIN"), orderController.getAllOrders);
 router.patch("/admin/:id/status", authMiddleware, roleMiddleware("ADMIN"), orderController.updateOrderStatus);
 
-module.exports = router;  
+module.exports = router;   

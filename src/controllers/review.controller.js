@@ -28,4 +28,4 @@ const getReviewsByProduct = catchAsync(async (req, res) => {
     return success(res, data, "Lấy danh sách đánh giá sản phẩm thành công");
 });
 
-module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct };
+module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct }; 

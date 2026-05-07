@@ -180,4 +180,4 @@ const getMyOrders = async (userId) => {
     }));
 };
  
-module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus, getMyOrders };
+module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus, getMyOrders }; 
