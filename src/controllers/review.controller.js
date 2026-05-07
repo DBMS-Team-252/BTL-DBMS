@@ -26,6 +26,6 @@ const createReview = catchAsync(async (req, res) => {
 const getReviewsByProduct = catchAsync(async (req, res) => {
     const data = await reviewService.getReviewsByProduct(req.params.productId);
     return success(res, data, "Lấy danh sách đánh giá sản phẩm thành công");
-});
+}); 
 
 module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct }; 

@@ -3,7 +3,7 @@ const { success } = require("../utils/response");
 const AppError = require("../utils/AppError");
 const orderService = require("../services/order.service");
 
-const checkout = async (req, res) => {
+const checkout = async (req, res) => { 
     try {
     const userId = req.user.id;
 

@@ -15,4 +15,4 @@ router.use(authMiddleware, roleMiddleware("ADMIN"));
 router.get("/admin", reviewController.getAllReviews);
 router.delete("/admin/:id", reviewController.deleteReview);
 
-module.exports = router;  
+module.exports = router;   

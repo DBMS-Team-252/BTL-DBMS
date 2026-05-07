@@ -178,6 +178,6 @@ const getMyOrders = async (userId) => {
         })),
         payment: order.payments[0] || null
     }));
-};
+}; 
  
 module.exports = { checkout, getOrderDetail, getAllOrders, updateOrderStatus, getMyOrders }; 

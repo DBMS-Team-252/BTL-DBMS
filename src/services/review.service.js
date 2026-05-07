@@ -141,6 +141,6 @@ const getReviewsByProduct = async (productId) => {
         comment: r.comment,
         created_at: r.created_at
     }));
-};
+}; 
  
 module.exports = { getAllReviews, deleteReview, createReview, getReviewsByProduct };

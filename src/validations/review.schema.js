@@ -11,6 +11,6 @@ const createReviewSchema = Joi.object({
         "any.required": "Rating là bắt buộc"
     }),
     comment: Joi.string().allow("").optional()
-});
+}); 
  
 module.exports = { createReviewSchema };  
