@@ -127,7 +127,7 @@ model users {
   phone      String      @db.VarChar(15)
   password   String      @db.VarChar(255)
   role       users_role? @default(USER)
-  status     user_status @default(ACTICE)
+  status     user_status @default(ACTIVE)
   created_at DateTime?   @default(now()) @db.Timestamp(0)
   carts      carts[]
   orders     orders[]
@@ -159,7 +159,7 @@ enum transaction_type {
 }
 
 enum user_status {
-  ACTICE
+  ACTIVE
   DELETED
   DISABLE
 }
