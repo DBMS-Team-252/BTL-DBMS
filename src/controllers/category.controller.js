@@ -8,7 +8,8 @@ const createCategory = catchAsync(async (req, res) => {
 });
 
 const getCategories = catchAsync(async (req, res) => {
-    const data = await categoryService.getCategories();
+    const { page, limit } = req.query;
+    const data = await categoryService.getCategories(page, limit);
     return success(res, data, "Lấy danh sách danh mục thành công");
 });
 

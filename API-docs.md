@@ -157,9 +157,12 @@ None
 
 **Access:** Public
 
-### Request
+### Query Parameters
 
-None
+| Query | Type   | Description               |
+| ----- | ------ | ------------------------- |
+| page  | number | Trang hiện tại (Mặc định 1)|
+| limit | number | Số lượng mục/trang (Mặc định 12)|
 
 ### Response
 
@@ -167,15 +170,22 @@ None
 {
   "success": true,
   "message": "Categories fetched successfully",
-  "data": [
-    {
-      "id": "str",
-      "name": "str",
-      "parent_id": "str|null"
+  "data": {
+    "data": [
+      {
+        "id": "str",
+        "name": "str",
+        "parent_id": "str|null"
+      }
+    ],
+    "pagination": {
+      "totalItems": "num",
+      "totalPages": "num",
+      "currentPage": "num",
+      "pageSize": "num"
     }
-  ]
+  }
 }
-```
 
 
 ## `POST /`

@@ -1,5 +1,6 @@
 const { getPrisma } = require("../configs/database");
 const AppError = require("../utils/AppError");
+const { getPaginationOptions, formatPagingData } = require("../utils/pagination");
 
 const createCategory = async (data) => {
     const prisma = getPrisma();
@@ -23,15 +24,26 @@ const createCategory = async (data) => {
     };
 };
 
-const getCategories = async () => {
+const getCategories = async (page, limit) => {
     const prisma = getPrisma();
-    const categories = await prisma.categories.findMany();
 
-    return categories.map((cat) => ({
+    const { skip, take } = getPaginationOptions(page, limit);
+
+    const [categories, totalItems] = await Promise.all([
+        prisma.categories.findMany({
+            skip,
+            take,
+        }),
+        prisma.categories.count()
+    ]);
+
+    const formattedCategories = categories.map((cat) => ({
         id: cat.id.toString(),
         name: cat.name,
         parent_id: cat.parent_id ? cat.parent_id.toString() : null,
     }));
+
+    return formatPagingData(formattedCategories, page, limit, totalItems);
 };
 
 const updateCategory = async (id, data) => {
